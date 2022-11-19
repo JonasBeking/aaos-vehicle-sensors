@@ -1,10 +1,17 @@
+import type { VehicleErrorEvent} from "@capacitor-community/aaos-data-utils";
+import {VehicleDataProxy} from "@capacitor-community/aaos-data-utils";
 import { registerPlugin } from '@capacitor/core';
 
-import type { VehicleSensorPluginPlugin } from './definitions';
+import type {VehicleSensorDataEvent, VehicleSensorPluginInterface} from "./definitions";
 
-const VehicleSensorPlugin = registerPlugin<VehicleSensorPluginPlugin>('VehicleSensorPlugin', {
-  web: () => import('./web').then(m => new m.VehicleSensorPluginWeb()),
-});
+const VehicleSensorService = registerPlugin<VehicleSensorPluginInterface>('SensorDataPlugin')
 
-export * from './definitions';
-export { VehicleSensorPlugin };
+export class VehicleSensorPlugin extends VehicleDataProxy<VehicleSensorDataEvent,VehicleErrorEvent>{
+
+  constructor() {
+    super(VehicleSensorService);
+  }
+
+}
+
+export * from "./configuration"

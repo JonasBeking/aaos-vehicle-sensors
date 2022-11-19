@@ -1,16 +1,17 @@
-package com.capacitorplugin.sensor;
+package io.ionic.plugins.aaosvehiclesensors;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.util.Log;
 
-import com.capacitorplugin.datautils.datacallback.DataCallback;
-import com.capacitorplugin.datautils.datacallback.DataCallbackBuilder;
-import com.capacitorplugin.datautils.dataview.DataView;
 import com.getcapacitor.JSArray;
 
 import org.json.JSONException;
+
+import io.ionic.plugins.aaosdatautils.datacallback.DataCallback;
+import io.ionic.plugins.aaosdatautils.datacallback.DataCallbackBuilder;
+import io.ionic.plugins.aaosdatautils.dataview.DataView;
 
 public class SensorCallback implements DataCallback<SensorCallback>, SensorEventListener {
 
@@ -39,7 +40,7 @@ public class SensorCallback implements DataCallback<SensorCallback>, SensorEvent
 
         }
         Log.d(TAG,"Received SensorEvent 'ValueChanged' with values: " + valueArray + " for Sensor: " + sensorEvent.sensor.getName());
-        SensorDataEvent sensorDataEvent = new SensorDataEvent("change-value",sensorEvent.sensor.getType());
+        SensorDataEvent sensorDataEvent = new SensorDataEvent(SensorDataEvent.Name.CHANGE_VALUE,sensorEvent.sensor.getType());
         sensorDataEvent.putData("values",valueArray);
         this.passDataToView(sensorDataEvent);
     }
@@ -47,7 +48,7 @@ public class SensorCallback implements DataCallback<SensorCallback>, SensorEvent
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         Log.d(TAG,"Received SensorEvent 'AccuracyChanged' with new accuracy: " + accuracy + " for Sensor: " + sensor.getName());
-        SensorDataEvent sensorDataEvent = new SensorDataEvent("change-value",sensor.getType());
+        SensorDataEvent sensorDataEvent = new SensorDataEvent(SensorDataEvent.Name.CHANGE_ACCURACY,sensor.getType());
         sensorDataEvent.putData("accuracy",accuracy);
         this.passDataToView(sensorDataEvent);
     }

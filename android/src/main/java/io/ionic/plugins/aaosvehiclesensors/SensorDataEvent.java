@@ -1,11 +1,17 @@
-package com.capacitorplugin.sensor;
+package io.ionic.plugins.aaosvehiclesensors;
 
-import com.capacitorplugin.datautils.dataevent.DataEvent;
-import com.getcapacitor.JSObject;
 
-public class SensorDataEvent extends DataEvent {
-    SensorDataEvent(String eventName,int sensorType) {
-        super(eventName);
+import io.ionic.plugins.aaosdatautils.dataevent.DataValueEvent;
+
+public class SensorDataEvent extends DataValueEvent {
+
+    enum Name{
+        CHANGE_VALUE,
+        CHANGE_ACCURACY
+    }
+
+    SensorDataEvent(SensorDataEvent.Name eventName,int sensorType) {
+        super(eventName.ordinal());
         putData("sensorType",sensorType);
     }
 }
